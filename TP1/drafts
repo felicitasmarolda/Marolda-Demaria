@@ -1,0 +1,9 @@
+sum :: Int -> Int -> Int
+sum a b = a * b
+
+difP (Coords a b) (Coords c d) = sqrt((a-c)**2 + (b-d)**2)
+difP (Coords a b) (Coords c d) = sqrt((**2) (a-c) + (**2) (b-d))
+difP (Coords a b) (Coords c d) = (sqrt) ((**2) (a-c) + (**2) (b-d))
+
+multip :: Float -> Float -> Float
+multip = (*)

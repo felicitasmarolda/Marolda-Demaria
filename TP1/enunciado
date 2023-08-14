@@ -8,40 +8,59 @@ capacidad por cada enlace recorrido.
 
 Para sostener este modelo se cuenta con las siguientes entidades:
 
-module Point ( Point, newP, difP)
+module Point ( Point, newP, difP )
    where
 
-data Point = Poi Int Int deriving (Eq, Show)
+data Point = Point Int Int 
+   deriving (Eq, Show)
 
 newP :: Int -> Int -> Point
+newP x y = Point x y
 difP :: Point -> Point -> Float  -- distancia absoluta
+difP (Point a b) (Point c d) = sqrt((a-c)**2 + (b-d)**2)
 -----------------
 module City ( City, newC, nameC, distanceC )
    where
 
-data City = Cit String Point deriving (Eq, Show)
+data City = City String Point 
+   deriving (Eq, Show)
 
 newC :: String -> Point -> City
+newC name coords = City name coords
 nameC :: City -> String
+nameC (City name coords) = name
 distanceC :: City -> City -> Float
+distanceC (City name1 coords1) (City name2 coords2) = difP (coords1) (coords2)
 -----------------
 module Quality ( Quality, newQ, capacityQ, delayQ )
    where
 
-data Quality = Qua String Int Float deriving (Eq, Show)
+data Quality = Quality String Int Float 
+   deriving (Eq, Show)
 
 newQ :: String -> Int -> Float -> Quality
+newQ nombre cantidad demora = Quality nombre cantidad demora
 capacityQ :: Quality -> Int -- cuantos túneles puede tolerar esta conexión
+capacityQ (Quality nombre cantidad demora) = cantidad
 delayQ :: Quality -> Float  -- la demora por unidad de distancia que sucede en las conexiones de este canal
+delayQ (Quality nombre cantidad demora) = demora
 -------------------
 module Link ( Link, newL, linksL, connectsL, capacityL, delayL )
    where
 
-data Link = Lin City City Quality deriving (Eq, Show)
+data Link = Link City City Quality 
+   deriving (Eq, Show)
 
 newL :: City -> City -> Quality -> Link -- genera un link entre dos ciudades distintas
+newL ciudad1 ciudad2 calidad = Link ciudad1 ciudad2 calidad
 connectsL :: City -> Link -> Bool   -- indica si esta ciudad es parte de este link
+connectsL (ciudad) (Link ciudad1 ciudad2) | ciudad == ciudad1 = True
+                                          | ciudad == ciudad2 = True
+                                          | otherwise = False
 linksL :: City -> City -> Link -> Bool -- indica si estas dos ciudades distintas estan conectadas mediante este link
+linksL ciudad1 ciudad2 (Link ciudadX ciudadY) | ciudad1 == ciudadX && ciudad2 == ciudadY = True
+                                              | ciudad2 == ciudadX && ciudad1 == ciudadY = True
+                                              | otherwise = False
 capacityL :: Link -> Int
 delayL :: Link -> Float     -- la demora que sufre una conexion en este canal
 -------------------
@@ -62,7 +81,7 @@ data Region = Reg [City] [Link] [Tunel]
 newR :: Region
 foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
-tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
+tunelR :: Region -> [City] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
