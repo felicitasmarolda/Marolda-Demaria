@@ -71,17 +71,23 @@ obtenerCalidad (Link ciudad1 ciudad2 calidad) = calidad
 module Tunel ( Tunel, newT, connectsT, usesT, delayT )
    where
 
-data Tunel = Tun [Link] deriving (Eq, Show)
+data Tunel = Tunel [Link] deriving (Eq, Show)
 
-newT :: [Link] -> Tunel
+newTunel :: [Link] -> Tunel
+newTunel listaLink = linkList
+
 connectsT :: City -> City -> Tunel -> Bool -- inidca si este tunel conceta estas dos ciudades distintas
+connectsT ciudad1 ciudad2 (Tunel linkList) = |
+                                             |
 usesT :: Link -> Tunel -> Bool  -- indica si este tunel atraviesa ese link
+
 delayT :: Tunel -> Float -- la demora que sufre una conexion en este tunel
+
 -------------------
 module Region ( Region, newR, foundR, linkR, tunelR, pathR, linksForR, connectedR, linkedR, delayR, availableCapacityForR, usedCapacityForR )
    where
 
-data Region = Reg [City] [Link] [Tunel]
+data Region = Region [City] [Link] [Tunel]
 newR :: Region
 foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
