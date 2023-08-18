@@ -18,6 +18,7 @@ isLinked :: City -> City -> Link -> Bool -- indica si estas dos ciudades distint
 isLinked ciudad1 ciudad2 (Link ciudadX ciudadY q) | ciudad1 == ciudadX && ciudad2 == ciudadY = True
                                                   | ciudad2 == ciudadX && ciudad1 == ciudadY = True
                                                   | otherwise = False
+
 capacityLink :: Link -> Int
 capacityLink (Link ciudad1 ciudad2 calidad) = capacityQ calidad
 
