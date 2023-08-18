@@ -15,9 +15,7 @@ data Point = Point Int Int
    deriving (Eq, Show)
 
 newP :: Int -> Int -> Point
-newP x y = Point x y
 difP :: Point -> Point -> Float  -- distancia absoluta
-difP (Point a b) (Point c d) = sqrt((a-c)**2 + (b-d)**2)
 -----------------
 module City ( City, newC, nameC, distanceC )
    where
