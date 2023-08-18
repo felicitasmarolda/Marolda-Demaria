@@ -85,6 +85,8 @@ usesT link (Tunel []) = False
 usesT link (Tunel (x:xs)) = | x == link = True
                             | otherwise (usesT link (Tunel (xs)))
 delayT :: Tunel -> Float -- la demora que sufre una conexion en este tunel
+delayT (Tunel []) = 0
+delayT (Tunel [link:linkList]) = delayL link + delayT (Tunel [linkList])
 
 -------------------
 module Region ( Region, newR, foundR, linkR, tunelR, pathR, linksForR, connectedR, linkedR, delayR, availableCapacityForR, usedCapacityForR )
