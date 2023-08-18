@@ -1,7 +1,7 @@
-import Point
-
 module City ( City, newC, nameC, distanceC )
    where
+
+import Point
 
 data City = City String Point 
    deriving (Eq, Show)

@@ -1,9 +1,9 @@
+module Link ( Link, newL, linksL, connectsL, capacityL, delayL )
+   where
+
 import Point
 import City
 import Quality
-
-module Link ( Link, newL, linksL, connectsL, capacityL, delayL )
-   where
 
 data Link = Link City City Quality 
    deriving (Eq, Show)
