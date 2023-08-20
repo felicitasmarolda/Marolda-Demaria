@@ -89,7 +89,7 @@ delayT (Tunel []) = 0
 delayT (Tunel [link:linkList]) = delayL link + delayT (Tunel [linkList])
 
 -------------------
-module Region ( Region, newR, foundR, linkR, tunelR, pathR, linksForR, connectedR, linkedR, delayR, availableCapacityForR, usedCapacityForR )
+module Region ( Region, newR, foundR, linkR, tunelR, connectedR, linkedR, delayR, availableCapacityForR, usedCapacityForR )
    where
 
 data Region = Region [City] [Link] [Tunel]
