@@ -18,8 +18,7 @@ linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de l
 linkR (Region cityList linkList tunelList) ciudad1 ciudad2 calidad = Region cityList ((newLink ciudad1 ciudad2 calidad):linkList) tunelList
 
 tunelR :: Region -> [City] -> Region -- genera una comunicación entre dos ciudades distintas de la región
-tunelR (Region cityList linkList tunelList) (x:(y:(cityListX))) = Region [] [] []
--- | y == last (x:(y:(cityListX))) = Region cityList linkList ((newT (Link x y )):tunelList)
+tunelR (Region cityList linkList tunelList) (x:(y:(cityListX))) = Region cityList linkList (tunelList)
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 connectedR r c1 c2 = True
