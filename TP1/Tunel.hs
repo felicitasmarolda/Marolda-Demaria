@@ -21,6 +21,7 @@ usesT :: Link -> Tunel -> Bool  -- indica si este tunel atraviesa ese link
 usesT link (Tunel []) = False
 usesT link (Tunel (x:xs)) | x == link = True
                           | otherwise = (usesT link (Tunel (xs)))
+
 delayT :: Tunel -> Float -- la demora que sufre una conexion en este tunel
 delayT (Tunel []) = 0
 delayT (Tunel (link:linkList)) = delayLink link + delayT (Tunel (linkList))

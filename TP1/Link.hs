@@ -10,6 +10,7 @@ data Link = Link City City Quality
 
 newLink :: City -> City -> Quality -> Link -- genera un link entre dos ciudades distintas
 newLink ciudad1 ciudad2 calidad = Link ciudad1 ciudad2 calidad
+
 ispartofLink :: City -> Link -> Bool   -- indica si esta ciudad es parte de este link
 ispartofLink (ciudad) (Link ciudad1 ciudad2 q) | ciudad == ciudad1 = True
                                                | ciudad == ciudad2 = True
