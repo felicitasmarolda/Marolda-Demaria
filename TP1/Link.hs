@@ -1,4 +1,4 @@
-module TP1.Link ( Link, newLink, ispartofLink, isLinked, capacityLink, delayLink, obtenerCalidad, obtenerCiudad1, obtenerCiudad2 )
+module TP1.Link ( Link, newLink, ispartofLink, isLinked, capacityLink, delayLink )
    where
 
 import TP1.Point
@@ -7,6 +7,7 @@ import TP1.Quality
 
 data Link = Link City City Quality 
    deriving (Eq, Show)
+
 
 newLink :: City -> City -> Quality -> Link -- genera un link entre dos ciudades distintas
 newLink ciudad1 ciudad2 calidad = Link ciudad1 ciudad2 calidad
@@ -25,12 +26,3 @@ capacityLink (Link ciudad1 ciudad2 calidad) = capacityQ calidad
 
 delayLink :: Link -> Float     -- la demora que sufre una conexion en este canal
 delayLink (Link ciudad1 ciudad2 calidad) = delayQ calidad
-
-obtenerCalidad :: Link -> Quality
-obtenerCalidad (Link ciudad1 ciudad2 calidad) = calidad 
-
-obtenerCiudad1 :: Link -> City
-obtenerCiudad1 (Link ciudad1 ciudad2 calidad) = ciudad1
- 
-obtenerCiudad2 :: Link -> City
-obtenerCiudad2 (Link ciudad1 ciudad2 calidad) = ciudad2

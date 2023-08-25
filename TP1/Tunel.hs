@@ -9,6 +9,15 @@ import TP1.Link
 data Tunel = Tunel [Link] 
    deriving (Eq, Show)
 
+obtenerCalidad :: City -> City -> Quality -> Quality
+obtenerCalidad ciuadad1 ciudad2 calidad = newLink ciudad1 ciudad2 calidad 
+
+obtenerCiudad1 :: Link -> City
+obtenerCiudad1 newLink ciudad1 ciudad2 calidad = ciudad1
+ 
+obtenerCiudad2 :: Link -> City
+obtenerCiudad2 newLink ciudad1 ciudad2 calidad = ciudad2
+
 newT :: [Link] -> Tunel
 newT linkList = Tunel linkList
 

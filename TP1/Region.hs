@@ -34,7 +34,8 @@ connectedR (Region ciudades listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | co
                                                                             | otherwise = connectedR (Region ciudades listLinks (listaTuneles)) ciudad1 ciudad2
 
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
-linkedR (Region ciudades (enlace: listLinks) tunelList) ciudad1 ciudad2 | isLinked ciudad1 ciudad2 enlace == True = True
+linkedR (Region ciudades [] tunelList) ciudad1 ciudad2 = False
+linkedR (Region ciudades (enlace: listLinks) tunelList) ciudad1 ciudad2 | isLinked ciudad1 ciudad2 enlace = True
                                                                         | otherwise = linkedR (Region ciudades (listLinks) tunelList) ciudad1 ciudad2
 
 encuentraTunel :: Region -> City -> City -> Tunel
@@ -55,4 +56,3 @@ linksForR = 0
 
 usedCapacityForR :: Int
 usedCapacityForR = 0
-
