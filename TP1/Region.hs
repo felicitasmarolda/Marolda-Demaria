@@ -1,4 +1,4 @@
-module TP1.Region ( Region, newR, foundR, linkR, tunelR, connectedR, linkedR, delayR, availableCapacityForR)
+module TP1.Region ( Region, newR, foundR, linkR, tunelR, connectedR, linkedR, delayR, availableCapacityForR )
    where
 
 import TP1.Point
@@ -21,16 +21,27 @@ tunelR :: Region -> [City] -> Region -- genera una comunicación entre dos ciuda
 tunelR (Reg cityList linkList tunelList) (x:(y:(cityListX))) = Reg cityList linkList (tunelList)
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
-connectedR (Reg ciudades listLinks []) ciudad1 ciudad2 = False
-connectedR (Reg ciudades listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel == True = True
-                                                                            | otherwise = connectedR (Reg ciudades listLinks (listaTuneles)) ciudad1 ciudad2
+connectedR (Reg cityList listLinks []) ciudad1 ciudad2 = False
+connectedR (Reg cityList listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel == True = True
+                                                                            | otherwise = connectedR (Reg cityList listLinks (listaTuneles)) ciudad1 ciudad2
 
-linkedR (Reg ciudades [] tunelList) ciudad1 ciudad2 = False
-linkedR (Reg ciudades (enlace: listLinks) tunelList) ciudad1 ciudad2 | connectsL ciudad1 ciudad2 enlace = True
-                                                                     | otherwise = linkedR (Reg ciudades (listLinks) tunelList) ciudad1 ciudad2
+linkedR (Reg cityList [] tunelList) ciudad1 ciudad2 = False
+linkedR (Reg cityList (enlace: listLinks) tunelList) ciudad1 ciudad2 | connectsL ciudad1 ciudad2 enlace = True
+                                                                     | otherwise = linkedR (Reg cityList (listLinks) tunelList) ciudad1 ciudad2
+
+encuentraTunel :: Region -> City -> City -> Tunel
+encuentraTunel (Reg cityList listLinks [ultimoTunel]) ciudad1 ciudad2 = ultimoTunel
+encuentraTunel (Reg cityList listLinks (tunel:tunelList)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel = tunel
+                                                                          | otherwise = encuentraTunel (Reg cityList listLinks (tunelList)) ciudad1 ciudad2
 
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
-delayR r c1 c2 = 1
+delayR (Reg cityList linkList tunelList) ciudad1 ciudad2 = delayT (encuentraTunel (Reg cityList linkList tunelList) ciudad1 ciudad2)
 
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
-availableCapacityForR r c1 c2 = 1
+availableCapacityForR (Reg cityList linkList tunelList) ciudad1 ciudad2 = capacityL (encuentraLink (Reg cityList linkList tunelList) ciudad1 ciudad2) - (cuantosTuneles (Reg cityList linkList tunelList) (encuentraLink (Reg cityList linkList tunelList) ciudad1 ciudad2))
+
+encuentraLink :: Region -> City -> City -> Link
+encuentraLink (Reg cityList linkList tunelList) ciudad1 ciudad2 = head [i|i <- linkList, connectsL ciudad1 ciudad2 i]
+
+cuantosTuneles :: Region -> Link -> Int
+cuantosTuneles (Reg cityList linkList tunelList) link = length [i|i <- tunelList, usesT link i]
