@@ -23,8 +23,9 @@ tunelR (Reg cityList linkList tunelList) (x:(y:(cityListX))) = Reg cityList link
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 connectedR r c1 c2 = True
 
-linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
-linkedR r c1 c2 = True
+linkedR (Reg ciudades [] tunelList) ciudad1 ciudad2 = False
+linkedR (Reg ciudades (enlace: listLinks) tunelList) ciudad1 ciudad2 | connectsL ciudad1 ciudad2 enlace = True
+                                                                     | otherwise = linkedR (Reg ciudades (listLinks) tunelList) ciudad1 ciudad2
 
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
 delayR r c1 c2 = 1
