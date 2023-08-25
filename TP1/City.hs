@@ -3,14 +3,14 @@ module TP1.City ( City, newC, nameC, distanceC )
 
 import TP1.Point
 
-data City = City String Point
+data City = Cit String Point
    deriving (Eq, Show)
 
 newC :: String -> Point -> City
-newC = City
+newC = Cit
 
 nameC :: City -> String
-nameC (City name coords) = name
+nameC (Cit name coords) = name
 
 distanceC :: City -> City -> Float
-distanceC (City name1 coords1) (City name2 coords2) = difP coords1 coords2
+distanceC (Cit name1 coords1) (Cit name2 coords2) = difP coords1 coords2

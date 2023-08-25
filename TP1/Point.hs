@@ -1,11 +1,11 @@
 module TP1.Point ( Point, newP, difP )
    where
 
-data Point = Point Int Int
+data Point = Poi Int Int
    deriving (Eq, Show)
 
 newP :: Int -> Int -> Point
-newP = Point
+newP = Poi
 
 difP :: Point -> Point -> Float  -- distancia absoluta
-difP (Point a b) (Point c d) = sqrt ((fromIntegral (a)-fromIntegral (c))**2 + (fromIntegral (b)-fromIntegral (d))**2)
+difP (Poi a b) (Poi c d) = sqrt ((fromIntegral (a)-fromIntegral (c))**2 + (fromIntegral (b)-fromIntegral (d))**2)
