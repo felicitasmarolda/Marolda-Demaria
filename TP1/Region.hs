@@ -21,9 +21,15 @@ tunelR :: Region -> [City] -> Region -- genera una comunicación entre dos ciuda
 tunelR (Reg cityList linkList tunelList) (x:(y:(cityListX))) = Reg cityList linkList (tunelList)
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
+<<<<<<< Updated upstream
 connectedR (Reg cityList listLinks []) ciudad1 ciudad2 = False
 connectedR (Reg cityList listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel == True = True
                                                                             | otherwise = connectedR (Reg cityList listLinks (listaTuneles)) ciudad1 ciudad2
+=======
+connectedR (Reg ciudades listLinks []) ciudad1 ciudad2 = False
+connectedR (Reg ciudades listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel = True
+                                                                            | otherwise = connectedR (Reg ciudades listLinks (listaTuneles)) ciudad1 ciudad2
+>>>>>>> Stashed changes
 
 linkedR (Reg cityList [] tunelList) ciudad1 ciudad2 = False
 linkedR (Reg cityList (enlace: listLinks) tunelList) ciudad1 ciudad2 | connectsL ciudad1 ciudad2 enlace = True
