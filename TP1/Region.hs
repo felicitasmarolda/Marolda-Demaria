@@ -26,13 +26,13 @@ connectedR (Reg ciudades listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | conne
                                                                          | otherwise = connectedR (Reg ciudades listLinks (listaTuneles)) ciudad1 ciudad2
 
 linkedR (Reg cityList [] tunelList) ciudad1 ciudad2 = False
-linkedR (Reg cityList (enlace: listLinks) tunelList) ciudad1 ciudad2 | connectsL ciudad1 ciudad2 enlace = True
-                                                                     | otherwise = linkedR (Reg cityList (listLinks) tunelList) ciudad1 ciudad2
+linkedR (Reg cityList (enlace: linkList) tunelList) ciudad1 ciudad2 | connectsL ciudad1 ciudad2 enlace = True
+                                                                    | otherwise = linkedR (Reg cityList (linkList) tunelList) ciudad1 ciudad2
 
 encuentraTunel :: Region -> City -> City -> Tunel
-encuentraTunel (Reg cityList listLinks [ultimoTunel]) ciudad1 ciudad2 = ultimoTunel
-encuentraTunel (Reg cityList listLinks (tunel:tunelList)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel = tunel
-                                                                          | otherwise = encuentraTunel (Reg cityList listLinks (tunelList)) ciudad1 ciudad2
+encuentraTunel (Reg cityList linkList [ultimoTunel]) ciudad1 ciudad2 = ultimoTunel
+encuentraTunel (Reg cityList linkList (tunel:tunelList)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel = tunel
+                                                                         | otherwise = encuentraTunel (Reg cityList linkList (tunelList)) ciudad1 ciudad2
 
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
 delayR (Reg cityList linkList tunelList) ciudad1 ciudad2 = delayT (encuentraTunel (Reg cityList linkList tunelList) ciudad1 ciudad2)
