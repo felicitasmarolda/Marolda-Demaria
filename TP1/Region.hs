@@ -31,8 +31,8 @@ connectedR (Reg cityList listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | conne
                                                                          | otherwise = connectedR (Reg cityList listLinks (listaTuneles)) ciudad1 ciudad2
 
 linkedR (Reg cityList [] tunelList) ciudad1 ciudad2 = False
-linkedR (Reg cityList (enlace: linkList) tunelList) ciudad1 ciudad2 | linksL ciudad1 ciudad2 enlace = True
-                                                                    | otherwise = linkedR (Reg cityList (linkList) tunelList) ciudad1 ciudad2
+linkedR (Reg cityList (enlace:linkList) tunelList) ciudad1 ciudad2 | linksL ciudad1 ciudad2 enlace = True
+                                                                   | otherwise = linkedR (Reg cityList (linkList) tunelList) ciudad1 ciudad2
 
 encuentraTunel :: Region -> City -> City -> Tunel
 encuentraTunel (Reg cityList linkList [ultimoTunel]) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 ultimoTunel = ultimoTunel

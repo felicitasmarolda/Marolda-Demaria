@@ -59,9 +59,10 @@ t = [
     capacityL link2 == 4,
     delayL link1 == 5 / 4.5,
 
-    connectsT ciudad3 ciudad5 tunelb == True,
+    connectsT ciudad3 ciudad1 tunelb == True,
     connectsT ciudad2 ciudad5 tuneld == False,
     usesT link3 tuneld == True,
+    connectedR regionTuneles ciudad2 ciudad5 == False,
     usesT link1 tunelb == False,
     delayT tunela == sqrt (68) / 5,
     
