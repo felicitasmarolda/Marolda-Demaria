@@ -13,8 +13,9 @@ newT :: [Link] -> Tunel
 newT = Tun
 
 connectsT :: City -> City -> Tunel -> Bool -- indica si este tunel conecta estas dos ciudades distintas
-connectsT ciudad1 ciudad2 (Tun linkList)  | linksL ciudad1 (head linkList) && linksL ciudad2 (last linkList) = True
-                                          | linksL ciudad2 (head linkList) && linksL ciudad1 (last linkList) = True
+connectsT ciudad1 ciudad2 (Tun linkList)  | connectsL ciudad1 (head linkList) && connectsL ciudad2 (last linkList) = True
+                                          | connectsL ciudad2 (head linkList) && connectsL ciudad1 (last linkList) = True
+                                          | otherwise = False
 
 usesT :: Link -> Tunel -> Bool  -- indica si este tunel atraviesa ese link
 usesT link (Tun []) = False
