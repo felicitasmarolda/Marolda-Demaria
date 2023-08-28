@@ -16,7 +16,8 @@ foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región
 foundR (Reg cityList linkList tunelList) ciudadProxima = Reg (ciudadProxima:cityList) linkList tunelList
 
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
-linkR (Reg cityList linkList tunelList) ciudad1 ciudad2 calidad = Reg cityList ((newL ciudad1 ciudad2 calidad):linkList) tunelList
+linkR (Reg cityList linkList tunelList) ciudad1 ciudad2 calidad | ciudad1 == ciudad2 = error "Las ciudades deben ser distintas"
+                                                                | otherwise = Reg cityList ((newL ciudad1 ciudad2 calidad):linkList) tunelList
 
 tunelR :: Region -> [City] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg cityList linkList tunelList) ciudades = Reg cityList linkList ((newT (linksDeCiudades (Reg cityList linkList tunelList) ciudades)):tunelList) 
@@ -26,12 +27,15 @@ linksDeCiudades (Reg cityList linkList tunelList) [ultimaCiudad] = []
 linksDeCiudades (Reg cityList linkList tunelList) (ciudad1:(ciudad2:ciudades)) = ((encuentraLink (Reg cityList linkList tunelList) ciudad1 ciudad2):linksDeCiudades (Reg cityList linkList tunelList) (ciudad2:ciudades))
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
-connectedR (Reg cityList listLinks []) ciudad1 ciudad2 = False
-connectedR (Reg cityList listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | connectsT ciudad1 ciudad2 tunel = True
-                                                                         | otherwise = connectedR (Reg cityList listLinks (listaTuneles)) ciudad1 ciudad2
+connectedR (Reg ciudades listLinks []) ciudad1 ciudad2 = False
+connectedR (Reg ciudades listLinks (tunel:listaTuneles)) ciudad1 ciudad2 | ciudad1 == ciudad2 = error "Las ciudades deben ser distintas"
+                                                                         | connectsT ciudad1 ciudad2 tunel = True
+                                                                         | otherwise = connectedR (Reg ciudades listLinks (listaTuneles)) ciudad1 ciudad2
 
+linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
 linkedR (Reg cityList [] tunelList) ciudad1 ciudad2 = False
-linkedR (Reg cityList (enlace:linkList) tunelList) ciudad1 ciudad2 | linksL ciudad1 ciudad2 enlace = True
+linkedR (Reg cityList (enlace:linkList) tunelList) ciudad1 ciudad2 | ciudad1 == ciudad2 = error "Las ciudades deben ser diferentes"
+                                                                   | linksL ciudad1 ciudad2 enlace = True
                                                                    | otherwise = linkedR (Reg cityList (linkList) tunelList) ciudad1 ciudad2
 
 encuentraTunel :: Region -> City -> City -> Tunel
