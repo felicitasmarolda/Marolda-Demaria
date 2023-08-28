@@ -5,12 +5,14 @@ import TP1.Point
 import TP1.City
 import TP1.Quality
 import TP1.Link 
+import TP1.Errors (errorLinks)
 
 data Tunel = Tun [Link]
    deriving (Eq, Show)
 
 newT :: [Link] -> Tunel
-newT = Tun
+newT (link:linkList) | elem link linkList = errorLinks
+                     | otherwise = Tun (link:linkList)
 
 connectsT :: City -> City -> Tunel -> Bool -- indica si este tunel conecta estas dos ciudades distintas
 connectsT ciudad1 ciudad2 (Tun linkList)  | connectsL ciudad1 (head linkList) && not (connectsL ciudad1 (head (tail linkList))) && not (connectsL ciudad2 (last (init linkList))) && connectsL ciudad2 (last linkList) = True

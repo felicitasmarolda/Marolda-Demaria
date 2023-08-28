@@ -71,3 +71,5 @@ t = [
     linkedR regionTuneles ciudad3 ciudad4 == True,
     linkedR regionTuneles ciudad1 ciudad4 == False,
     delayR regionTuneles ciudad3 ciudad2 == (sqrt 68) / 5.0]
+
+g = connectedR regionTuneles ciudad2 ciudad5 == False

@@ -4,12 +4,14 @@ module TP1.Link ( Link, newL, connectsL, linksL, capacityL, delayL )
 import TP1.Point
 import TP1.City
 import TP1.Quality
+import TP1.Errors
 
 data Link = Lin City City Quality
    deriving (Eq, Show)
 
 newL :: City -> City -> Quality -> Link -- genera un link entre dos ciudades distintas
-newL = Lin
+newL ciudad1 ciudad2 calidad | ciudad1 == ciudad2 = errorRepeticionCiudad
+                             | otherwise = Lin ciudad1 ciudad2 calidad
 
 connectsL :: City -> Link -> Bool   -- indica si esta ciudad es parte de este link
 connectsL ciudad (Lin ciudad1 ciudad2 calidad)  | ciudad == ciudad1 = True
