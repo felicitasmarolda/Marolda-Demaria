@@ -62,14 +62,12 @@ t = [
     connectsT ciudad3 ciudad1 tunelb == True,
     connectsT ciudad2 ciudad5 tuneld == False,
     usesT link3 tuneld == True,
-    connectedR regionTuneles ciudad2 ciudad5 == False,
     usesT link1 tunelb == False,
     delayT tunela == sqrt (68) / 5,
     
-    connectedR regionTuneles ciudad1 ciudad2 == True,
-    connectedR regionTuneles ciudad4 ciudad2 == False,
     linkedR regionTuneles ciudad3 ciudad4 == True,
     linkedR regionTuneles ciudad1 ciudad4 == False,
-    delayR regionTuneles ciudad3 ciudad2 == (sqrt 68) / 5.0]
-
-g = connectedR regionTuneles ciudad2 ciudad5 == False
+    delayR regionTuneles ciudad3 ciudad2 == (sqrt 68) / 5.0,
+    connectedR regionTuneles ciudad2 ciudad5 == False,
+    connectedR regionTuneles ciudad1 ciudad2 == True,
+    connectedR regionTuneles ciudad4 ciudad2 == False]
