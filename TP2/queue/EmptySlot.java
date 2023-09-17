@@ -10,8 +10,8 @@ public class EmptySlot extends QueueStateSlots{
 	public Object takePolymorfic() {
 		throw new Error( QueueIsEmpty );
 	}
-	
 	public Object headPolymorfic() {
 		throw new Error( QueueIsEmpty );
 	}
+
 }
