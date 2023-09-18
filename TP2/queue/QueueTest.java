@@ -79,7 +79,7 @@ public class QueueTest {
 	assertTrue( e.getMessage().equals( QueueIsEmpty ) );
   }
   
-  @Test public void tes11CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
+  @Test public void test11CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
 	Queue queue = queueWithObjectSomething();
 	queue.take();
 	Error e = assertThrows(Error.class, () -> queue.take());
