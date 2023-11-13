@@ -97,7 +97,7 @@ public class FourInLine {
 		return gameTriumphType.verifyTriumphAsTypeInGameWithColorAndColumn( this, color, lastPlayedColumn );
 	}
 
-	private boolean draw() {
+	public boolean draw() {
 		return board.stream()
 					.allMatch( columnArray -> columnArray.size() == gameHeight );
 	}
@@ -131,9 +131,5 @@ public class FourInLine {
 									  .collect(Collectors.joining());
 
 		return grid;
-	}
-	
-	public ArrayList<ArrayList<Character>> tablero() {
-		return board;
 	}
 }

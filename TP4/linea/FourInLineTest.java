@@ -24,10 +24,10 @@ public class FourInLineTest {
         assertBoardAfterPlayingAt(new FourInLine( 3, 3, 'C' ),"| O | X |   |\n",2,1);
     }
 
-    @Test public void test03GameEndsWhenBoardFull(){
+    @Test public void test03GameEndsInDrawWhenBoardFull(){
     	FourInLine fourInLine = new FourInLine( 3, 2, 'C');
     	allGameMoves( fourInLine, 1,2,2,3,3,1 );
-    	assertTrue( fourInLine.finished() );
+    	assertTrue( fourInLine.draw() );
     }
 
     @Test public void test04RedWinsByHorizontalLineAsTypeA(){
