@@ -32,7 +32,7 @@ public class FourInLine {
 			}
 		}
 		else {
-			throw new RuntimeException("Parámetros inválidos.");
+			throw new RuntimeException("Invalid dimension parameters, must be greater than 0.");
 		}
 	}
 	
@@ -69,7 +69,8 @@ public class FourInLine {
 	}	
 
 	private boolean columnIsValid(int column) {
-		return 1 <= column && column <= gameBase && board.get(column - 1).size() != gameHeight;
+		return 1 <= column && column <= gameBase &&
+			   board.get(column - 1).size() != gameHeight;
 	}
 
 	public FourInLine dropPieceWithColorAt(char color, int column) {
@@ -82,7 +83,7 @@ public class FourInLine {
 		possibleCurrentGameStates.remove(0);
 		possibleCurrentGameStates.add(0, nextTurnGameState);
 		possibleCurrentGameStates.stream()
-						   		 .filter( turnInstance -> turnInstance.gameFinished() == finished() )
+						   		 .filter( turnInstance -> turnInstance.gameFinished( this ) )
 						   		 .forEach( turnInstance -> gameState = turnInstance);
 	}
 	
@@ -93,7 +94,7 @@ public class FourInLine {
 	}
 	
 	public boolean wins(char color) {
-		return gameTriumphType.verifyTriumphInGameAsTypeWithColorAndColumn( this, color, lastPlayedColumn );
+		return gameTriumphType.verifyTriumphAsTypeInGameWithColorAndColumn( this, color, lastPlayedColumn );
 	}
 
 	private boolean draw() {
@@ -131,7 +132,7 @@ public class FourInLine {
 
 		return grid;
 	}
-
+	
 	public ArrayList<ArrayList<Character>> tablero() {
 		return board;
 	}

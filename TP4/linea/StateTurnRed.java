@@ -13,7 +13,7 @@ public class StateTurnRed extends GameState {
 	}
 
 
-	public boolean gameFinished() {
-		return false;
+	public boolean gameFinished(FourInLine fourInLine) {
+		return ! fourInLine.finished();
 	}
 }

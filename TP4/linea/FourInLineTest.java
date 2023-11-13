@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 public class FourInLineTest {
+	
     @Test public void test00NewLine(){
         assertEquals(showInTest("|   |   |   |\n"), new FourInLine( 3, 3, 'C' ).show() );
     }
@@ -24,172 +25,147 @@ public class FourInLineTest {
     }
 
     @Test public void test03GameEndsWhenBoardFull(){
-        assertFinishedAfterPlayingAt(new FourInLine( 3, 2, 'C'), 1,2,2,3,3,1);
+    	FourInLine fourInLine = new FourInLine( 3, 2, 'C');
+    	allGameMoves( fourInLine, 1,2,2,3,3,1 );
+    	assertTrue( fourInLine.finished() );
     }
 
     @Test public void test04RedWinsByHorizontalLineAsTypeA(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 4, 4, 'A'), 'X', 'O', 1,1,2,2,3,3,4);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 4, 4, 'A'), 'X', 'O', 1,1,2,2,3,3,4);
     }
 
     @Test public void test05BlueWinsByVerticalLineAsTypeA(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 6, 4, 'A'), 'O', 'X', 5,1,2,1,3,1,2,1);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 6, 4, 'A'), 'O', 'X', 5,1,2,1,3,1,2,1);
     }
 
     @Test public void test06BlueDoesNotWinByIncreasingDiagonalAsTypeA(){
-        FourInLine fourInLine = new FourInLine( 7, 4, 'A');
-        assertFinishedAfterPlayingAt(fourInLine, 6,1,2,2,4,3,3,3,1,4,4,4);
+        assertHasNotFinishedAfterPlayingAt(new FourInLine( 7, 4, 'A'), 6,1,2,2,4,3,3,3,1,4,4,4);
     }
 
     @Test public void test07BlueDoesNotWinByDecreasingDiagonalAsTypeA(){
-        assertFinishedAfterPlayingAt(new FourInLine( 7, 4, 'A'), 5,1,1,1,2,1,2,2,3,3,3,4);
+        assertHasNotFinishedAfterPlayingAt(new FourInLine( 7, 4, 'A'), 5,1,1,1,2,1,2,2,3,3,3,4);
     }
 
     @Test public void test08BlueWinsByCrecentLineAsTypeB(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 7, 4, 'B'), 'O', 'X', 6,1,2,2,4,3,3,3,1,4,4,4);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 7, 4, 'B'), 'O', 'X', 6,1,2,2,4,3,3,3,1,4,4,4);
     }
 
     @Test public void test09BlueWinsByDecrecentLineAsTypeB(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 6, 4, 'B'), 'O', 'X', 5,1,1,1,2,1,2,2,3,3,3,4);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 6, 4, 'B'), 'O', 'X', 5,1,1,1,2,1,2,2,3,3,3,4);
     }
 
     @Test public void test10BlueDoesNotWinByVerticalLineAsTypeB(){
-        assertFinishedAfterPlayingAt(new FourInLine( 4, 4, 'B'), 3,1,2,1,2,1,2,1);
+        assertHasNotFinishedAfterPlayingAt(new FourInLine( 4, 4, 'B'), 3,1,2,1,2,1,2,1);
     }
 
     @Test public void test11RedDoesNotWinByHorizontalLineAsTypeB(){
-        assertFinishedAfterPlayingAt(new FourInLine( 4, 4, 'B'), 1,1,2,2,3,3,4);
+        assertHasNotFinishedAfterPlayingAt(new FourInLine( 4, 4, 'B'), 1,1,2,2,3,3,4);
     }
 
     @Test public void test12BlueWinsByHorizontalLineAsTypeC(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 4, 4, 'C'), 'O', 'X', 3,1,2,1,2,1,2,1);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 4, 4, 'C'), 'O', 'X', 3,1,2,1,2,1,2,1);
     }
 
     @Test public void test13RedWinsByVerticalLineAsTypeC(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 6, 5, 'C'), 'X', 'O', 2,1,2,1,2,1,2);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 6, 5, 'C'), 'X', 'O', 2,1,2,1,2,1,2);
     }
 
     @Test public void test14BlueWinsByCrescentLineAsTypeC(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 4, 4, 'C'), 'O', 'X', 2,1,3,2,3,3,4,4,4,4);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 4, 4, 'C'), 'O', 'X', 2,1,3,2,3,3,4,4,4,4);
     }
     @Test public void test15BlueWinsByDecrecentLineAsTypeC(){
-        assertVictoryOfColorAfterPlayAt(new FourInLine( 6, 4, 'C'), 'O', 'X', 5,1,1,1,2,1,2,2,3,3,3,4);
+        assertVictoryOfColorAfterPlayingAt(new FourInLine( 6, 4, 'C'), 'O', 'X', 5,1,1,1,2,1,2,2,3,3,3,4);
     }
-
-    @Test public void test16CantPlayWhenGameEnded(){
-        FourInLine fourInLine;
-        assertThrowsLikeAfterPlayingAt(new FourInLine( 2, 4, 'C'), "Game has finished.", () -> new FourInLine( 2, 4, 'C').playRedAt(1), 2,1,2,1,2,1,2);
+    
+    @Test public void test16BaseCanNotBeLessThan0(){
+    	assertThrowsLike("Invalid dimension parameters, must be greater than 0.", () -> new FourInLine( -1, 4, 'C'));
     }
-
-    @Test public void test17CantPlayInNonExistentColumn() {
-        FourInLine fourInLine = new FourInLine( 3, 2, 'C');
-        assertThrowsLike("Inadequate column.", () -> fourInLine.playRedAt(4));
+    
+    @Test public void test17HeightCanNotBeLessThan0(){
+    	assertThrowsLike("Invalid dimension parameters, must be greater than 0.", () -> new FourInLine( 4, -1, 'C'));
     }
-
-    @Test public void test18CanNotPlayInFullColumn(){
-        FourInLine fourInLine = new FourInLine( 3, 6, 'C');
-        assertThrowsLikeAfterPlayingAt(fourInLine, "Inadequate column.", () -> fourInLine.playRedAt(1), 1,1,1,1,1,1);
+    
+    @Test public void test18TypeCanNotBeAnythingOtherThanABC(){
+    	assertThrowsLike("Invalid triumph type parameter.", () -> new FourInLine( 4, 6, 'T'));
     }
-
+    
     @Test public void test19BlueCanNotStartTheGame(){
-        FourInLine fourInLine = new FourInLine( 3, 3, 'C');
-        assertThrowsLike("Incorrect turn.", () -> fourInLine.playBlueAt(1));
+    	assertThrowsLike("Incorrect turn.", () -> new FourInLine( 3, 3, 'C').playBlueAt(1));
+    }
+    
+    @Test public void test20CantPlayInNonExistentColumn() {
+    	assertThrowsLike("Inadequate column.", () -> new FourInLine( 3, 2, 'C').playRedAt(4));
+    }
+    
+    @Test public void test21CanNotPlayTwoTimesInARow(){
+    	FourInLine fourInLine = new FourInLine( 4, 6, 'C');
+    	assertThrowsLikeAfterPlayingAt("Incorrect turn.", () -> fourInLine.playRedAt(1), fourInLine, 1,2,2,1,1);
+    }
+    
+    @Test public void test22CanNotPlayInFullColumn(){
+    	FourInLine fourInLine = new FourInLine( 3, 6, 'C');
+    	assertThrowsLikeAfterPlayingAt("Inadequate column.", () -> fourInLine.playRedAt(1), fourInLine, 1,1,1,1,1,1);
     }
 
-    @Test public void test20CanNotPlayTwoTimesInARow(){
-        FourInLine fourInLine = new FourInLine( 4, 6, 'C');
-        assertThrowsLikeAfterPlayingAt(fourInLine, "Incorrect turn.", () -> fourInLine.playRedAt(1), 1,2,2,1,1);
+    @Test public void test23CantPlayWhenGameEnded(){
+    	FourInLine fourInLine = new FourInLine( 2, 4, 'C');
+        assertThrowsLikeAfterPlayingAt("Game has finished.", () -> fourInLine.playRedAt(1), fourInLine, 2,1,2,1,2,1,2);
     }
-
-    @Test public void test21BaseCanNotBeLessThan0(){
-        assertThrowsLike("Parámetros inválidos.", () -> new FourInLine( -1, 4, 'C'));
-    }
-
-    @Test public void test22HeightCanNotBeLessThan0(){
-        assertThrowsLike("Parámetros inválidos.", () -> new FourInLine( 4, -1, 'C'));
-    }
-
-    @Test public void test23TypeCanNotBeAnythingOtherThanABC(){
-        assertThrowsLike("Parámetro de tipo de estrategia inválido.", () -> new FourInLine( 4, 6, 'T'));
-    }
-
-    @Test public void print1() {
-        FourInLine line = new FourInLine( 4, 4, 'C');
-        allGameMoves(line, 1,1,1,2,1,2,2,3,3,3,4);
-        System.out.println("Print 1:\n");
-        System.out.println(line.show());
-    }
-
-    @Test public void print2() {
-        FourInLine line = new FourInLine( 4, 4, 'C');
-        allGameMoves(line, 1,2,2,4,3,3,3,1,4,4,4);
-        System.out.println("Print 2:\n");
-        System.out.println(line.show());
-    }
-
-    @Test public void print3() {
-        FourInLine line = new FourInLine( 4, 4, 'C');
-        allGameMoves(line, 1,1,2,2,3,3,4);
-        System.out.println("Print 3:\n");
-        System.out.println(line.show());
-    }
-
-    @Test public void print4() {
-        FourInLine line = new FourInLine( 4, 4, 'C');
-        allGameMoves(line, 1,2,1,2,1,2,3,2);
-        System.out.println("Print 4:\n");
-        System.out.println(line.show());
-    }
-
-    @Test public void testerPrint() {
-        FourInLine line = new FourInLine( 6, 6, 'C');
-        allGameMoves(line, 1,1,2,2,3,3,4);
-        System.out.println("Tester print:\n");
-        System.out.println(line.show());
-    }
-    private void assertBoardAfterPlayingAt(FourInLine fourInLine, String linea, int ... moves) {
-        allGameMoves(fourInLine, moves);
-        assertEquals(showInTest(linea), fourInLine.show() );
-    }
-
-    private void assertThrowsLike(String message, Executable executable) {
-        assertEquals(message, assertThrows(Exception.class, executable).getMessage());
-    }
-
-    private void allGameMoves(FourInLine fourInLine, int ... charArrayOfColumnEntries) {
-
-        IntStream.range(0, charArrayOfColumnEntries.length)
-                .forEach(i -> {
-                    int column = charArrayOfColumnEntries[i];
-                    if (i % 2 == 0) {
-                        fourInLine.playRedAt(column);
-                    } else {
-                        fourInLine.playBlueAt(column);
-                    } });
-    }
+    
     private String showInTest(String changedLine){
-        return "|---|---|---|\n" +
-                "|   |   |   |\n" +
-                "|---|---|---|\n" +
-                "|   |   |   |\n" +
-                "|---|---|---|\n" + changedLine + "|---|---|---|\n";
+    	
+    	return "|---|---|---|\n" +
+    		   "|   |   |   |\n" +
+    		   "|---|---|---|\n" +
+    		   "|   |   |   |\n" +
+    		   "|---|---|---|\n" + 
+    		     changedLine     +
+    		   "|---|---|---|\n"  ;
     }
-    private void assertVictoryOfColorAfterPlayAt(FourInLine fourInLine, char win, char loose, int ... moves) {
-        allGameMoves(fourInLine, moves);
-        assertFinishedWinningWithAndLoosingWith(fourInLine, win, loose);
+    
+    private void allGameMoves(FourInLine fourInLine, int ... charArrayOfColumnEntries) {
+    	
+    	IntStream.range(0, charArrayOfColumnEntries.length)
+    			 .forEach(i -> { int column = charArrayOfColumnEntries[i];
+    			 				 if (i % 2 == 0) {
+    			 					 fourInLine.playRedAt(column);
+    			 				 } 
+    			 				 else {
+    			 					 fourInLine.playBlueAt(column);
+   			 				 	} 
+    			 			   }
+    					 );
+    }
+    
+    private void assertBoardAfterPlayingAt(FourInLine fourInLine, String linea, int ... moves) {
+    	
+    	allGameMoves(fourInLine, moves);
+    	assertEquals(showInTest(linea), fourInLine.show() );
     }
 
-    private static void assertFinishedWinningWithAndLoosingWith(FourInLine fourInLine, char win, char loose) {
-        assertTrue( fourInLine.finished() );
+    private void assertVictoryOfColorAfterPlayingAt(FourInLine fourInLine, char win, char loose, int ... moves) {
+    	
+    	allGameMoves(fourInLine, moves);
+    	assertTrue( fourInLine.finished() );
         assertTrue( fourInLine.wins(win));
         assertFalse( fourInLine.wins(loose));
     }
-    private void assertFinishedAfterPlayingAt(FourInLine fourInLine, int ... moves) {
-        allGameMoves(fourInLine, moves);
-        assertTrue( fourInLine.finished() );
+    
+    private void assertHasNotFinishedAfterPlayingAt(FourInLine fourInLine, int ... moves) {
+    	
+    	allGameMoves(fourInLine, moves);
+    	assertFalse( fourInLine.finished() );
     }
-    private void assertThrowsLikeAfterPlayingAt(FourInLine fourInLine, String message, Executable executable, int ... moves) {
+    
+    private void assertThrowsLike(String message, Executable executable) {
+    	
+        assertEquals(message, assertThrows(Exception.class, executable).getMessage());
+    }
+        
+    private void assertThrowsLikeAfterPlayingAt(String message, Executable executable, 
+    											FourInLine fourInLine, int ... moves) {
+    	
         allGameMoves(fourInLine, moves);
         assertThrowsLike(message, executable);
     }
-
 }

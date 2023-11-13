@@ -9,10 +9,10 @@ public class TypeNull extends TriumphType {
 	}
 
 	public FourInLine checkMeAsTriumphTypeFor(FourInLine fourInLine) {
-		throw new RuntimeException("Parámetro de tipo de estrategia inválido.");
+		throw new RuntimeException("Invalid triumph type parameter.");
 	}
 	
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(FourInLine fourInLine, char color, int column) {
+	public boolean verifyTriumphAsTypeInGameWithColorAndColumn(FourInLine fourInLine, char color, int column) {
 		return false;	
 	}
 }

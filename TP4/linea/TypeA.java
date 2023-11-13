@@ -11,7 +11,7 @@ public class TypeA extends TriumphType {
 		return fourInLine;
 	}
 
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(FourInLine fourInLine, char color, int column) {
+	public boolean verifyTriumphAsTypeInGameWithColorAndColumn(FourInLine fourInLine, char color, int column) {
 		return currentPieceHorizontalTriumph(fourInLine, color, column)         ||
 			   currentPieceVerticalTriumph(fourInLine, color, column);	
 	}

@@ -10,7 +10,7 @@ public class StateFinished extends GameState {
 		throw new RuntimeException("Game has finished.");
 	}
 
-	public boolean gameFinished() {
-		return true;
+	public boolean gameFinished(FourInLine fourInLine) {
+		return fourInLine.finished();
 	}
 }
